@@ -8,13 +8,40 @@ import quoteRoutes from "./routes/quote.routes.js";
 
 const app = express();
 
-app.use(cors());
+/**
+ * ✅ CORS CONFIG — MUST BE FIRST
+ * Replace the origin with your EXACT Vercel frontend URL
+ */
+app.use(
+  cors({
+    origin: "https://decor-vista-frontend-tql9-aar6nez71.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
+
+/**
+ * ✅ HANDLE PREFLIGHT REQUESTS (CRITICAL)
+ * This fixes the "preflight failed" → "Failed to fetch" issue
+ */
+app.options("*", cors());
+
+/**
+ * Body parser
+ */
 app.use(express.json());
 
+/**
+ * Health check
+ */
 app.get("/", (req, res) => {
   res.send("DecorVista Backend is live");
 });
 
+/**
+ * Routes
+ */
 app.use("/api/auth", authRoutes);
 app.use("/api/sessions", sessionRoutes);
 app.use("/api/products", productRoutes);
