@@ -14,17 +14,17 @@ const app = express();
  */
 app.use(
   cors({
-    origin: "https://decor-vista-frontend-tql9-aar6nez71.vercel.app",
+    origin: [
+      "https://decor-vista-frontend-tql9-aar6nez71.vercel.app",
+      "https://decorvista-frontend.vercel.app"
+    ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
 );
 
-/**
- * ✅ HANDLE PREFLIGHT REQUESTS (CRITICAL)
- * This fixes the "preflight failed" → "Failed to fetch" issue
- */
+// Handle preflight
 app.options("*", cors());
 
 /**
